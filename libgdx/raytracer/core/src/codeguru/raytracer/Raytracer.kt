@@ -1,31 +1,27 @@
-package codeguru.raytracer;
+package codeguru.raytracer
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.ApplicationAdapter
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.utils.ScreenUtils
 
-public class Raytracer extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+class Raytracer : ApplicationAdapter() {
+    var batch: SpriteBatch? = null
+    var img: Texture? = null
+    override fun create() {
+        batch = SpriteBatch()
+        img = Texture("badlogic.jpg")
+    }
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+    override fun render() {
+        ScreenUtils.clear(1f, 0f, 0f, 1f)
+        batch!!.begin()
+        batch!!.draw(img, 0f, 0f)
+        batch!!.end()
+    }
+
+    override fun dispose() {
+        batch!!.dispose()
+        img!!.dispose()
+    }
 }
