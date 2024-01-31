@@ -1,6 +1,8 @@
-sourceSets.main.java.srcDirs = [ "src/" ]
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+sourceSets.main.java.srcDirs = ["src/" ]
 
-sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 ext {
@@ -17,3 +19,12 @@ robovm {
 }
 
 eclipse.project.name = appName + "-ios"
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+kotlin {
+    jvmToolchain(8)
+}

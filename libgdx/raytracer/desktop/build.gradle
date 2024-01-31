@@ -1,5 +1,7 @@
-sourceCompatibility = 1.8
-sourceSets.main.java.srcDirs = [ "src/" ]
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+sourceSets.main.java.srcDirs = ["src/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
 
 project.ext.mainClassName = "codeguru.raytracer.DesktopLauncher"
@@ -47,3 +49,12 @@ tasks.register('dist', Jar) {
 dist.dependsOn classes
 
 eclipse.project.name = appName + "-desktop"
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+kotlin {
+    jvmToolchain(8)
+}
