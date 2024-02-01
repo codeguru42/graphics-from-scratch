@@ -10,17 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 
 class Raytracer : ApplicationAdapter() {
-    private val VIEWPORT_WIDTH: Float = 80.0f
-    private val VIEWPORT_HEIGHT: Float = 60.0f
     private val CANVAS_WIDTH = 640
     private val CANVAS_HEIGHT = 480
 
-    private var camera: Camera? = null
     private var canvas: Pixmap? = null
     private var batch: SpriteBatch? = null
 
     override fun create() {
-        camera = OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
         canvas = Pixmap(CANVAS_WIDTH, CANVAS_HEIGHT, Pixmap.Format.RGB888)
         batch = SpriteBatch()
     }
