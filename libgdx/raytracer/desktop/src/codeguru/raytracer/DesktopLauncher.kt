@@ -10,6 +10,7 @@ object DesktopLauncher {
         val config = Lwjgl3ApplicationConfiguration()
         config.setForegroundFPS(60)
         config.setTitle("Raytracer")
+        config.setWindowedMode(800, 600)
         Lwjgl3Application(Raytracer(), config)
     }
 }
