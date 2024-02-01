@@ -1,23 +1,23 @@
 package codeguru.raytracer
 
 import com.badlogic.gdx.ApplicationAdapter
-import com.badlogic.gdx.graphics.Camera
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 
 class Raytracer : ApplicationAdapter() {
-    private val CANVAS_WIDTH = 640
-    private val CANVAS_HEIGHT = 480
-
+    private var canvasWidth: Int? = null
+    private var canvasHeight: Int? = null
     private var canvas: Pixmap? = null
     private var batch: SpriteBatch? = null
 
     override fun create() {
-        canvas = Pixmap(CANVAS_WIDTH, CANVAS_HEIGHT, Pixmap.Format.RGB888)
+        canvasWidth = Gdx.graphics.width
+        canvasHeight = Gdx.graphics.height
+        canvas = Pixmap(canvasWidth!!, canvasHeight!!, Pixmap.Format.RGB888)
         batch = SpriteBatch()
     }
 
@@ -26,9 +26,9 @@ class Raytracer : ApplicationAdapter() {
         canvas?.setColor(Color(1.0f, 0.0f, 0.0f, 1.0f))
         canvas?.drawCircle(0, 0, 480)
         canvas?.setColor(Color(0.0f, 1.0f, 0.0f, 1.0f))
-        canvas?.drawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+        canvas?.drawRectangle(0, 0, canvasWidth!!, canvasHeight!!)
         canvas?.setColor(Color(0.0f, 0.0f, 1.0f, 1.0f))
-        canvas?.drawLine(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+        canvas?.drawLine(0, 0, canvasWidth!!, canvasHeight!!)
 
         val img = Texture(canvas)
         batch?.begin()
