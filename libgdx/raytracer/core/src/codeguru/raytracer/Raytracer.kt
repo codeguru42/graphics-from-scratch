@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 
 class Raytracer : ApplicationAdapter() {
+    private var BACKGROUND_COLOR = Color.BLACK
+
     private var canvasWidth: Int? = null
     private var canvasHeight: Int? = null
     private var viewportWidth: Float? = null
@@ -16,6 +18,8 @@ class Raytracer : ApplicationAdapter() {
     private val d: Float = 10.0f
     private var canvas: Pixmap? = null
     private var batch: SpriteBatch? = null
+
+    private val scene = Scene()
 
     override fun create() {
         canvasWidth = Gdx.graphics.width
@@ -52,6 +56,24 @@ class Raytracer : ApplicationAdapter() {
     }
 
     private fun traceRay(p1: Point, p2: Point, tMin: Float, tMax: Float): Color {
+        var closestT = Float.POSITIVE_INFINITY
+        var closestSphere: Sphere? = null
+
+        for (sphere in scene.spheres) {
+            val (t1, t2) = sphere.intersect(p1, p2)
+            if (tMin < t1 && t1 < tMax && t1 < closestT) {
+                closestT = t1
+                closestSphere = sphere
+            }
+            if (tMin < t2 && t2 < tMax && t2 < closestT) {
+                closestT = t2
+                closestSphere = sphere
+            }
+            if (closestSphere == null) {
+                return BACKGROUND_COLOR
+            }
+            return closestSphere.color
+        }
         return Color.BLUE
     }
 
