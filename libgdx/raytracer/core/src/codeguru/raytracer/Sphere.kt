@@ -22,4 +22,8 @@ class Sphere(val center: Point, val radius: Float, val color: Color) {
         val t2 = (-b - sqrt(discriminant.toDouble()) / 2 * a)
         return Pair(t1.toFloat(), t2.toFloat())
     }
+
+    fun normalAt(p: Point): Vector {
+        return subtract(p, center).normalize()
+    }
 }
