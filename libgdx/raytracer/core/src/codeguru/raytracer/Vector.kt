@@ -10,11 +10,11 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
     }
 }
 
-fun add(p: Point, v: Vector): Point {
-    return Point(p.x + v.x, p.y + v.y, p.z + v.z)
+fun add(p: Point3, v: Vector): Point3 {
+    return Point3(p.x + v.x, p.y + v.y, p.z + v.z)
 }
 
-fun subtract(p1: Point, p2: Point): Vector {
+fun subtract(p1: Point3, p2: Point3): Vector {
     return Vector(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z)
 }
 

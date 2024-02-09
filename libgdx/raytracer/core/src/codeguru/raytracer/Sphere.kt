@@ -3,9 +3,9 @@ package codeguru.raytracer
 import com.badlogic.gdx.graphics.Color
 import kotlin.math.sqrt
 
-class Sphere(val center: Point, val radius: Float, val color: Color) {
-    fun intersect(p1: Point, p2: Point): Pair<Float, Float> {
-        val origin = Point(0.0f, 0.0f, 0.0f)
+class Sphere(val center: Point3, val radius: Float, val color: Color) {
+    fun intersect(p1: Point3, p2: Point3): Pair<Float, Float> {
+        val origin = Point3(0.0f, 0.0f, 0.0f)
         val co = subtract(p1, this.center)
         val d = subtract(p2, origin)
 
@@ -23,7 +23,7 @@ class Sphere(val center: Point, val radius: Float, val color: Color) {
         return Pair(t1.toFloat(), t2.toFloat())
     }
 
-    fun normalAt(p: Point): Vector {
+    fun normalAt(p: Point3): Vector {
         return subtract(p, center).normalize()
     }
 }

@@ -35,7 +35,7 @@ class Raytracer : ApplicationAdapter() {
 
     override fun render() {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
-        val origin = Point(0.0f, 0.0f, 0.0f)
+        val origin = Point3(0.0f, 0.0f, 0.0f)
         for (x in 0..canvasWidth!!) {
             for (y in 0..canvasHeight!!) {
                 val p = canvasToViewport(x, y)
@@ -51,7 +51,7 @@ class Raytracer : ApplicationAdapter() {
         batch?.end()
     }
 
-    private fun canvasToViewport(x: Int, y: Int): Point {
+    private fun canvasToViewport(x: Int, y: Int): Point3 {
         val vx = lerp(
             x.toFloat(),
             0.0f,
@@ -66,10 +66,10 @@ class Raytracer : ApplicationAdapter() {
             canvasHeight!!.toFloat(),
             -viewportHeight!! / 2.0f
         )
-        return Point(vx, vy, d)
+        return Point3(vx, vy, d)
     }
 
-    private fun traceRay(p1: Point, p2: Point, tMin: Float, tMax: Float): Color {
+    private fun traceRay(p1: Point3, p2: Point3, tMin: Float, tMax: Float): Color {
         var closestT = Float.POSITIVE_INFINITY
         var closestSphere: Sphere? = null
 
@@ -88,12 +88,12 @@ class Raytracer : ApplicationAdapter() {
             return BACKGROUND_COLOR
         }
 
-        val p = add(p1, mul(closestT, subtract(p2, Point(0.0f, 0.0f, 0.0f))))
+        val p = add(p1, mul(closestT, subtract(p2, Point3(0.0f, 0.0f, 0.0f))))
         val color = Color(closestSphere.color)
         return color.mul(computeLighting(p, closestSphere.normalAt(p)))
     }
 
-    private fun computeLighting(p: Point, n: Vector): Float {
+    private fun computeLighting(p: Point3, n: Vector): Float {
         var i = 0.0f
 
         for (light in scene.lights) {
