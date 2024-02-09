@@ -1,6 +1,10 @@
 package codeguru.raytracer
 
-data class Vector(val x: Float, val y: Float, val z: Float)
+import kotlin.math.sqrt
+
+data class Vector(val x: Float, val y: Float, val z: Float) {
+    val length: Float = sqrt(dot(this, this))
+}
 
 fun subtract(p1: Point, p2: Point): Vector {
     return Vector(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z)

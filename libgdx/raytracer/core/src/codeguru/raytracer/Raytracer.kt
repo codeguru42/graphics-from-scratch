@@ -90,6 +90,16 @@ class Raytracer : ApplicationAdapter() {
         return closestSphere.color
     }
 
+    private fun calculateLighting(p: Point, n: Vector): Float {
+        var i = 0.0f
+
+        for (light in scene.lights) {
+            i += light.getIntensityAt(p, n)
+        }
+
+        return i
+    }
+
     override fun dispose() {
         canvas?.dispose()
     }
