@@ -52,7 +52,21 @@ class Raytracer : ApplicationAdapter() {
     }
 
     private fun canvasToViewport(x: Int, y: Int): Point {
-        return Point(x * viewportWidth!! / canvasWidth!!, y * viewportHeight!! / canvasHeight!!, d)
+        val vx = lerp(
+            x.toFloat(),
+            0.0f,
+            -viewportWidth!! / 2.0f,
+            canvasWidth!!.toFloat(),
+            viewportWidth!! / 2.0f
+        )
+        val vy = lerp(
+            y.toFloat(),
+            0.0f,
+            -viewportHeight!! / 2.0f,
+            canvasHeight!!.toFloat(),
+            viewportHeight!! / 2.0f
+        )
+        return Point(vx, vy, d)
     }
 
     private fun traceRay(p1: Point, p2: Point, tMin: Float, tMax: Float): Color {
