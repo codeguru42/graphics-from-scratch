@@ -69,12 +69,11 @@ class Raytracer : ApplicationAdapter() {
                 closestT = t2
                 closestSphere = sphere
             }
-            if (closestSphere == null) {
-                return BACKGROUND_COLOR
-            }
-            return closestSphere.color
         }
-        return Color.BLUE
+        if (closestSphere == null) {
+            return BACKGROUND_COLOR
+        }
+        return closestSphere.color
     }
 
     override fun dispose() {
