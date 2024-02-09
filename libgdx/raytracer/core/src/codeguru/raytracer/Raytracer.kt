@@ -25,7 +25,7 @@ class Raytracer : ApplicationAdapter() {
         canvasWidth = Gdx.graphics.width
         canvasHeight = Gdx.graphics.height
 
-        var aspectRatio = canvasWidth!!.toFloat() / canvasHeight!!.toFloat()
+        val aspectRatio = canvasWidth!!.toFloat() / canvasHeight!!.toFloat()
         viewportHeight = 100.0f
         viewportWidth = viewportHeight!! * aspectRatio
 
