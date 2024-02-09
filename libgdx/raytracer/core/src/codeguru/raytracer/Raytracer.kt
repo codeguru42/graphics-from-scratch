@@ -62,9 +62,9 @@ class Raytracer : ApplicationAdapter() {
         val vy = lerp(
             y.toFloat(),
             0.0f,
-            -viewportHeight!! / 2.0f,
+            viewportHeight!! / 2.0f,
             canvasHeight!!.toFloat(),
-            viewportHeight!! / 2.0f
+            -viewportHeight!! / 2.0f
         )
         return Point(vx, vy, d)
     }
