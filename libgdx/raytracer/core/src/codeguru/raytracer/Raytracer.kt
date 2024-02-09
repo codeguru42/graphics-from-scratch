@@ -15,7 +15,7 @@ class Raytracer : ApplicationAdapter() {
     private var canvasHeight: Int? = null
     private var viewportWidth: Float? = null
     private var viewportHeight: Float? = null
-    private val d: Float = 10.0f
+    private val d: Float = 1.0f
     private var canvas: Pixmap? = null
     private var batch: SpriteBatch? = null
 
@@ -26,7 +26,7 @@ class Raytracer : ApplicationAdapter() {
         canvasHeight = Gdx.graphics.height
 
         val aspectRatio = canvasWidth!!.toFloat() / canvasHeight!!.toFloat()
-        viewportHeight = 100.0f
+        viewportHeight = 1.0f
         viewportWidth = viewportHeight!! * aspectRatio
 
         canvas = Pixmap(canvasWidth!!, canvasHeight!!, Pixmap.Format.RGB888)
