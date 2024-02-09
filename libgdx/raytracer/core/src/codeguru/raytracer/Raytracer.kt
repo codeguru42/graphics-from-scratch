@@ -87,10 +87,13 @@ class Raytracer : ApplicationAdapter() {
         if (closestSphere == null) {
             return BACKGROUND_COLOR
         }
-        return closestSphere.color
+
+        val p = add(p1, mul(closestT, subtract(p2, Point(0.0f, 0.0f, 0.0f))))
+        val color = Color(closestSphere.color)
+        return color.mul(computeLighting(p, closestSphere.normalAt(p)))
     }
 
-    private fun calculateLighting(p: Point, n: Vector): Float {
+    private fun computeLighting(p: Point, n: Vector): Float {
         var i = 0.0f
 
         for (light in scene.lights) {
