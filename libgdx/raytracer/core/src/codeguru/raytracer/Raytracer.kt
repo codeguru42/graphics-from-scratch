@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
 
 class Raytracer : ApplicationAdapter() {
-    private var BACKGROUND_COLOR = Color.BLACK
+    private var BACKGROUND_COLOR = Color.WHITE
 
     private var canvasWidth: Int? = null
     private var canvasHeight: Int? = null
