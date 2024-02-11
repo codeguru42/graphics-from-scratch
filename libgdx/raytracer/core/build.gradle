@@ -3,7 +3,8 @@ plugins {
 }
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = ["src/"]
+sourceSets.test.java.srcDirs = ["test/"]
 
 eclipse.project.name = appName + "-core"
 repositories {
@@ -14,4 +15,7 @@ dependencies {
 }
 kotlin {
     jvmToolchain(8)
+}
+tasks.test {
+    useJUnitPlatform()
 }
