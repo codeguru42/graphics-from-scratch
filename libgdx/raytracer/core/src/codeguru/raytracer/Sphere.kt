@@ -5,9 +5,8 @@ import kotlin.math.sqrt
 
 class Sphere(val center: Point3, val radius: Float, val color: Color) {
     fun intersect(p1: Point3, p2: Point3): Pair<Float, Float> {
-        val origin = Point3(0.0f, 0.0f, 0.0f)
         val co = subtract(p1, this.center)
-        val d = subtract(p2, origin)
+        val d = subtract(p2, p1)
 
         val a = dot(d, d)
         val b = 2 * dot(co, d)
@@ -18,8 +17,8 @@ class Sphere(val center: Point3, val radius: Float, val color: Color) {
             return Pair(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
         }
 
-        val t1 = (-b + sqrt(discriminant.toDouble()) / 2 * a)
-        val t2 = (-b - sqrt(discriminant.toDouble()) / 2 * a)
+        val t1 = (-b + sqrt(discriminant.toDouble())) / (2 * a)
+        val t2 = (-b - sqrt(discriminant.toDouble())) / (2 * a)
         return Pair(t1.toFloat(), t2.toFloat())
     }
 
