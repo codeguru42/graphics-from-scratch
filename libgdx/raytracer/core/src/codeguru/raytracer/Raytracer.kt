@@ -88,7 +88,8 @@ class Raytracer : ApplicationAdapter() {
             return BACKGROUND_COLOR
         }
 
-        val p = add(p1, mul(closestT, subtract(p2, Point3(0.0f, 0.0f, 0.0f))))
+        val r = Ray(p1, Vector(p2))
+        val p = r.evaluate(closestT)
         val color = Color(closestSphere.color)
         return color.mul(computeLighting(p, closestSphere.normalAt(p)))
     }
