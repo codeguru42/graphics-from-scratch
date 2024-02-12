@@ -7,11 +7,7 @@ fun lerp(x: Float, x1: Float, y1: Float, x2: Float, y2: Float): Float {
     return m * (x - x1) + y1
 }
 
-fun solveQuadratic(
-    b: Float,
-    a: Float,
-    c: Float
-): Pair<Float, Float> {
+fun solveQuadratic(a: Float, b: Float, c: Float): Pair<Float, Float> {
     val discriminant = b * b - 4 * a * c
     if (discriminant < 0) {
         return Pair(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY)
