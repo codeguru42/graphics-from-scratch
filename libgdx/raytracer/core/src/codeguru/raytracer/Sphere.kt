@@ -2,7 +2,7 @@ package codeguru.raytracer
 
 import com.badlogic.gdx.graphics.Color
 
-class Sphere(val center: Point3, val radius: Float, val color: Color) {
+data class Sphere(val center: Point3, val radius: Float, val color: Color, val specular: Int = -1) {
     fun intersect(p1: Point3, p2: Point3): Pair<Float, Float> {
         val co = subtract(p1, this.center)
         val d = subtract(p2, p1)

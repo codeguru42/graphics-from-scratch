@@ -7,22 +7,26 @@ class Scene {
         Sphere(
             center = Point3(x = 0.0f, y = -1.0f, z = 3.0f),
             radius = 1.0f,
-            color = Color.RED
+            color = Color.RED,
+            specular = 500,
         ),
         Sphere(
             center = Point3(x = 2.0f, y = 0.0f, z = 4.0f),
             radius = 1.0f,
-            color = Color.BLUE
+            color = Color.BLUE,
+            specular = 500,
         ),
         Sphere(
             center = Point3(-2.0f, 0.0f, 4.0f),
             radius = 1.0f,
-            color = Color.GREEN
+            color = Color.GREEN,
+            specular = 10,
         ),
         Sphere(
             center = Point3(x = 0.0f, y = -5001.0f, z = 0.0f),
             radius = 5000.0f,
-            color = Color.YELLOW
+            color = Color.YELLOW,
+            specular = 1000,
         ),
     )
 

@@ -12,8 +12,16 @@ data class Vector(val x: Float, val y: Float, val z: Float) {
     }
 }
 
+fun negate(v: Vector): Vector {
+    return Vector(-v.x, -v.y, -v.z)
+}
+
 fun add(p: Point3, v: Vector): Point3 {
     return Point3(p.x + v.x, p.y + v.y, p.z + v.z)
+}
+
+fun subtract(v1: Vector, v2: Vector): Vector {
+    return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
 }
 
 fun subtract(p1: Point3, p2: Point3): Vector {
