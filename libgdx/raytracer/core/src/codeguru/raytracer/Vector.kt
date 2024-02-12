@@ -3,8 +3,6 @@ package codeguru.raytracer
 import kotlin.math.sqrt
 
 data class Vector(val x: Float, val y: Float, val z: Float) {
-    constructor(p: Point3) : this(p.x, p.y, p.z)
-
     val length: Float = sqrt(dot(this, this))
 
     fun normalize(): Vector {
