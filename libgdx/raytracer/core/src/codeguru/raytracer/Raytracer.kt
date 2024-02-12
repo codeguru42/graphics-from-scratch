@@ -89,14 +89,13 @@ class Raytracer : ApplicationAdapter() {
         val r = Ray(p1, Vector(p2))
         val p = r.evaluate(closestT)
         val color = Color(closestSphere.color)
-        return color.mul(
-            computeLighting(
-                p,
-                closestSphere.normalAt(p),
-                negate(Vector(p2)),
-                closestSphere.specular
-            )
+        val intensity = computeLighting(
+            p,
+            closestSphere.normalAt(p),
+            negate(Vector(p2)),
+            closestSphere.specular
         )
+        return color.mul(intensity)
     }
 
     private fun computeLighting(p: Point3, n: Vector, v: Vector, s: Int): Float {
