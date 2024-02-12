@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
+import kotlin.math.min
 
 class Raytracer : ApplicationAdapter() {
     private var BACKGROUND_COLOR = Color.WHITE
@@ -75,12 +76,9 @@ class Raytracer : ApplicationAdapter() {
 
         for (sphere in scene.spheres) {
             val (t1, t2) = sphere.intersect(p1, p2)
-            if (tMin < t1 && t1 < tMax && t1 < closestT) {
-                closestT = t1
-                closestSphere = sphere
-            }
-            if (tMin < t2 && t2 < tMax && t2 < closestT) {
-                closestT = t2
+            val t = min(t1, t2)
+            if (tMin < t && t < tMax && t < closestT) {
+                closestT = t
                 closestSphere = sphere
             }
         }
