@@ -76,7 +76,7 @@ class Raytracer : ApplicationAdapter() {
         tMin: Float,
         tMax: Float
     ): Color {
-        var (closestT, closestSphere: Sphere?) = closestIntersection(p1, p2, tMin, tMax)
+        val (closestT, closestSphere: Sphere?) = closestIntersection(p1, p2, tMin, tMax)
         if (closestSphere == null) {
             return BACKGROUND_COLOR
         }
