@@ -11,7 +11,7 @@ class Sphere(val center: Point3, val radius: Float, val color: Color) {
         val b = 2 * dot(co, d)
         val c = dot(co, co) - this.radius * this.radius
 
-        return solveQuadratic(b, a, c)
+        return solveQuadratic(a, b, c)
     }
 
     fun normalAt(p: Point3): Vector {
