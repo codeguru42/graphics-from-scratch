@@ -70,18 +70,13 @@ class Raytracer : ApplicationAdapter() {
         return Point3(vx, vy, d)
     }
 
-    private fun traceRay(p1: Point3, p2: Point3, tMin: Float, tMax: Float): Color {
-        var closestT = Float.POSITIVE_INFINITY
-        var closestSphere: Sphere? = null
-
-        for (sphere in scene.spheres) {
-            val (t1, t2) = sphere.intersect(p1, p2)
-            val t = min(t1, t2)
-            if (tMin < t && t < tMax && t < closestT) {
-                closestT = t
-                closestSphere = sphere
-            }
-        }
+    private fun traceRay(
+        p1: Point3,
+        p2: Point3,
+        tMin: Float,
+        tMax: Float
+    ): Color {
+        var (closestT, closestSphere: Sphere?) = closestIntersection(p1, p2, tMin, tMax)
         if (closestSphere == null) {
             return BACKGROUND_COLOR
         }
@@ -96,6 +91,26 @@ class Raytracer : ApplicationAdapter() {
             closestSphere.specular
         )
         return color.mul(intensity)
+    }
+
+    private fun closestIntersection(
+        p1: Point3,
+        p2: Point3,
+        tMin: Float,
+        tMax: Float
+    ): Pair<Float, Sphere?> {
+        var closestT = Float.POSITIVE_INFINITY
+        var closestSphere: Sphere? = null
+
+        for (sphere in scene.spheres) {
+            val (t1, t2) = sphere.intersect(p1, p2)
+            val t = min(t1, t2)
+            if (tMin < t && t < tMax && t < closestT) {
+                closestT = t
+                closestSphere = sphere
+            }
+        }
+        return Pair(closestT, closestSphere)
     }
 
     private fun computeLighting(p: Point3, n: Vector, v: Vector, s: Int): Float {
