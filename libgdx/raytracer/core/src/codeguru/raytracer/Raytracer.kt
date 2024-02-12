@@ -96,7 +96,7 @@ class Raytracer : ApplicationAdapter() {
         var i = 0.0f
 
         for (light in scene.lights) {
-            i += light.getIntensityAt(p, n)
+            i += light.getDiffuseIntensityAt(p, n)
         }
 
         return i
