@@ -3,7 +3,14 @@ package codeguru.raytracer
 import kotlin.math.pow
 
 abstract class Light(protected val intensity: Float) {
-    abstract fun getIntensityAt(p: Point3, n: Vector, v: Vector, s: Int): Float
+    abstract val t_max: Float
+
+    open fun getIntensityAt(p: Point3, n: Vector, v: Vector, s: Int): Float {
+        val l = getLightVectorAt(p)!!
+        return getDiffuseIntensityAt(n, l) + getSpecularIntensityAt(l, n, v, s)
+    }
+
+    abstract fun getLightVectorAt(p: Point3): Vector?
 
     protected fun getDiffuseIntensityAt(n: Vector, l: Vector): Float {
         val nDotL = dot(n, l)
@@ -30,21 +37,29 @@ abstract class Light(protected val intensity: Float) {
 }
 
 class AmbientLight(intensity: Float) : Light(intensity) {
+    override val t_max: Float = Float.POSITIVE_INFINITY
+
     override fun getIntensityAt(p: Point3, n: Vector, v: Vector, s: Int): Float {
         return intensity
+    }
+
+    override fun getLightVectorAt(p: Point3): Vector? {
+        return null
     }
 }
 
 class PointLight(intensity: Float, private val position: Point3) : Light(intensity) {
-    override fun getIntensityAt(p: Point3, n: Vector, v: Vector, s: Int): Float {
-        val l = subtract(position, p)
-        return super.getDiffuseIntensityAt(n, l) + super.getSpecularIntensityAt(l, n, v, s)
+    override val t_max: Float = 1.0f
+
+    override fun getLightVectorAt(p: Point3): Vector {
+        return subtract(position, p)
     }
 }
 
 class DirectionalLight(intensity: Float, private val direction: Vector) : Light(intensity) {
-    override fun getIntensityAt(p: Point3, n: Vector, v: Vector, s: Int): Float {
-        val l = direction
-        return super.getDiffuseIntensityAt(n, l) + super.getSpecularIntensityAt(l, n, v, s)
+    override val t_max: Float = Float.POSITIVE_INFINITY
+
+    override fun getLightVectorAt(p: Point3): Vector {
+        return direction
     }
 }

@@ -40,7 +40,7 @@ class Raytracer : ApplicationAdapter() {
         for (x in 0..canvasWidth!!) {
             for (y in 0..canvasHeight!!) {
                 val p = canvasToViewport(x, y)
-                val color: Color = traceRay(origin, p, 1.0f, Float.POSITIVE_INFINITY)
+                val color: Color = traceRay(origin, Vector(p), 1.0f, Float.POSITIVE_INFINITY)
                 canvas?.setColor(color)
                 canvas?.drawPixel(x, y)
             }
@@ -72,7 +72,7 @@ class Raytracer : ApplicationAdapter() {
 
     private fun traceRay(
         p1: Point3,
-        p2: Point3,
+        p2: Vector,
         tMin: Float,
         tMax: Float
     ): Color {
@@ -81,14 +81,13 @@ class Raytracer : ApplicationAdapter() {
             return BACKGROUND_COLOR
         }
 
-        val d = subtract(p2, p1)
-        val r = Ray(p1, d)
+        val r = Ray(p1, p2)
         val p = r.evaluate(closestT)
         val color = Color(closestSphere.color)
         val intensity = computeLighting(
             p,
             closestSphere.normalAt(p),
-            negate(d),
+            negate(p2),
             closestSphere.specular
         )
         return color.mul(intensity)
@@ -96,7 +95,7 @@ class Raytracer : ApplicationAdapter() {
 
     private fun closestIntersection(
         p1: Point3,
-        p2: Point3,
+        p2: Vector,
         tMin: Float,
         tMax: Float
     ): Pair<Float, Sphere?> {
@@ -118,7 +117,19 @@ class Raytracer : ApplicationAdapter() {
         var i = 0.0f
 
         for (light in scene.lights) {
-            i += light.getIntensityAt(p, n, v, s)
+            val l = light.getLightVectorAt(p)
+            if (l != null) {
+                val (_, shadowSphere) = closestIntersection(
+                    p,
+                    l,
+                    0.0f,
+                    light.t_max
+                )
+                if (shadowSphere == null)
+                    i += light.getIntensityAt(p, n, v, s)
+            } else {
+                i += light.getIntensityAt(p, n, v, s)
+            }
         }
 
         return i
