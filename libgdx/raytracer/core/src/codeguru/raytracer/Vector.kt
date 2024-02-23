@@ -35,3 +35,8 @@ fun mul(c: Float, v: Vector): Vector {
 fun dot(v1: Vector, v2: Vector): Float {
     return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
 }
+
+// Reflect vector v about normal vector n
+fun reflect(v: Vector, n: Vector): Vector {
+    return subtract(mul(2.0f * dot(n, v), n), v)
+}

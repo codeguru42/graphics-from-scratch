@@ -24,7 +24,7 @@ abstract class Light(protected val intensity: Float) {
             return 0.0f
         }
 
-        val r = subtract(mul(2.0f * dot(n, l), n), l)
+        val r = reflect(l, n)
         val rDotV = dot(r, v)
 
         if (rDotV <= 0) {
