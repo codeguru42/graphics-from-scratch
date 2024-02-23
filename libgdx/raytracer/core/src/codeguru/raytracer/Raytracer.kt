@@ -40,7 +40,13 @@ class Raytracer : ApplicationAdapter() {
         for (x in 0..canvasWidth!!) {
             for (y in 0..canvasHeight!!) {
                 val p = canvasToViewport(x, y)
-                val color: Color = traceRay(origin, Vector(p), 1.0f, Float.POSITIVE_INFINITY)
+                val color: Color = traceRay(
+                    p1 = origin,
+                    p2 = Vector(p),
+                    tMin = 1.0f,
+                    tMax = Float.POSITIVE_INFINITY,
+                    recursionDepth = 3
+                )
                 canvas?.setColor(color)
                 canvas?.drawPixel(x, y)
             }
@@ -74,7 +80,8 @@ class Raytracer : ApplicationAdapter() {
         p1: Point3,
         p2: Vector,
         tMin: Float,
-        tMax: Float
+        tMax: Float,
+        recursionDepth: Int,
     ): Color {
         val (closestT, closestSphere: Sphere?) = closestIntersection(p1, p2, tMin, tMax)
         if (closestSphere == null) {
@@ -84,13 +91,23 @@ class Raytracer : ApplicationAdapter() {
         val r = Ray(p1, p2)
         val p = r.evaluate(closestT)
         val color = Color(closestSphere.color)
+        val n = closestSphere.normalAt(p)
         val intensity = computeLighting(
             p,
-            closestSphere.normalAt(p),
+            n,
             negate(p2),
             closestSphere.specular
         )
-        return color.mul(intensity)
+        val localColor = color.mul(intensity)
+
+        val reflective = closestSphere.reflective
+        if (recursionDepth <= 0 || reflective <= 0.0f) {
+            return localColor
+        }
+
+        val reflect = reflect(negate(p2), n)
+        val reflectedColor = traceRay(p, reflect, 0.0f, Float.POSITIVE_INFINITY, recursionDepth - 1)
+        return localColor.mul(1.0f - reflective).add(reflectedColor.mul(reflective))
     }
 
     private fun closestIntersection(
