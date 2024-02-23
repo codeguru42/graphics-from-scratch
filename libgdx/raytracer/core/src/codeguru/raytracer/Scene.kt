@@ -9,24 +9,28 @@ class Scene {
             radius = 1.0f,
             color = Color.RED,
             specular = 500,
+            reflective = 0.2f,
         ),
         Sphere(
             center = Point3(x = 2.0f, y = 0.0f, z = 4.0f),
             radius = 1.0f,
             color = Color.BLUE,
             specular = 500,
+            reflective = 0.3f,
         ),
         Sphere(
             center = Point3(-2.0f, 0.0f, 4.0f),
             radius = 1.0f,
             color = Color.GREEN,
             specular = 10,
+            reflective = 0.4f,
         ),
         Sphere(
             center = Point3(x = 0.0f, y = -5001.0f, z = 0.0f),
             radius = 5000.0f,
             color = Color.YELLOW,
             specular = 1000,
+            reflective = 0.5f,
         ),
     )
 
