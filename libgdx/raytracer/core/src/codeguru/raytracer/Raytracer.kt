@@ -41,8 +41,7 @@ class Raytracer : ApplicationAdapter() {
             for (y in 0..canvasHeight!!) {
                 val p = canvasToViewport(x, y)
                 val color: Color = traceRay(
-                    p1 = camera,
-                    p2 = subtract(p, camera),
+                    r = Ray(camera, subtract(p, camera)),
                     tMin = 1.0f,
                     tMax = Float.POSITIVE_INFINITY,
                     recursionDepth = 3
@@ -77,25 +76,23 @@ class Raytracer : ApplicationAdapter() {
     }
 
     private fun traceRay(
-        p1: Point3,
-        p2: Vector,
+        r: Ray,
         tMin: Float,
         tMax: Float,
         recursionDepth: Int,
     ): Color {
-        val (closestT, closestSphere: Sphere?) = closestIntersection(p1, p2, tMin, tMax)
+        val (closestT, closestSphere: Sphere?) = closestIntersection(r, tMin, tMax)
         if (closestSphere == null) {
             return BACKGROUND_COLOR
         }
 
-        val r = Ray(p1, p2)
         val p = r.evaluate(closestT)
         val color = Color(closestSphere.color)
         val n = closestSphere.normalAt(p)
         val intensity = computeLighting(
             p,
             n,
-            negate(p2),
+            negate(r.v),
             closestSphere.specular
         )
         val localColor = color.mul(intensity)
@@ -105,14 +102,14 @@ class Raytracer : ApplicationAdapter() {
             return localColor
         }
 
-        val reflect = reflect(negate(p2), n)
-        val reflectedColor = traceRay(p, reflect, 0.0f, Float.POSITIVE_INFINITY, recursionDepth - 1)
+        val reflect = reflect(negate(r.v), n)
+        val reflectedColor =
+            traceRay(Ray(p, reflect), 0.0f, Float.POSITIVE_INFINITY, recursionDepth - 1)
         return localColor.mul(1.0f - reflective).add(reflectedColor.mul(reflective))
     }
 
     private fun closestIntersection(
-        p1: Point3,
-        p2: Vector,
+        r: Ray,
         tMin: Float,
         tMax: Float
     ): Pair<Float, Sphere?> {
@@ -120,7 +117,7 @@ class Raytracer : ApplicationAdapter() {
         var closestSphere: Sphere? = null
 
         for (sphere in scene.spheres) {
-            val (t1, t2) = sphere.intersect(p1, p2)
+            val (t1, t2) = sphere.intersect(r)
             val t = min(t1, t2)
             if (tMin < t && t < tMax && t < closestT) {
                 closestT = t
@@ -137,8 +134,7 @@ class Raytracer : ApplicationAdapter() {
             val l = light.getLightVectorAt(p)
             if (l != null) {
                 val (_, shadowSphere) = closestIntersection(
-                    p,
-                    l,
+                    Ray(p, l),
                     0.0f,
                     light.t_max
                 )
