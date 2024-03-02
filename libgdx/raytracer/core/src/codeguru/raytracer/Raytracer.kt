@@ -36,13 +36,13 @@ class Raytracer : ApplicationAdapter() {
 
     override fun render() {
         ScreenUtils.clear(0f, 0f, 0f, 1f)
-        val origin = Point3(0.0f, 0.0f, 0.0f)
+        val camera = Point3(0.0f, 0.0f, 0.0f)
         for (x in 0..canvasWidth!!) {
             for (y in 0..canvasHeight!!) {
                 val p = canvasToViewport(x, y)
                 val color: Color = traceRay(
-                    p1 = origin,
-                    p2 = Vector(p),
+                    p1 = camera,
+                    p2 = subtract(p, camera),
                     tMin = 1.0f,
                     tMax = Float.POSITIVE_INFINITY,
                     recursionDepth = 3
