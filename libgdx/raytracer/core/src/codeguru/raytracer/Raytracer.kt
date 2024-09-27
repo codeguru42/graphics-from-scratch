@@ -149,6 +149,7 @@ class Raytracer : ApplicationAdapter() {
     }
 
     override fun dispose() {
+        batch?.dispose()
         canvas?.dispose()
     }
 }
